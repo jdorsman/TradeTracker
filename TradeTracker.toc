@@ -1,0 +1,12 @@
+## Interface: 20505
+## Title: TradeTracker
+## Notes: Organize the spam from trade and services chat into a clear overview.
+## Author: jdorsman
+## Version: 1.0.0
+## SavedVariables: TradeTrackerDB
+
+embeds.xml
+TradeTracker.lua
+options.lua
+chat.lua
+gui.lua
