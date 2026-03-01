@@ -14,6 +14,5 @@ Before adding new code, you analyze the existing project files and make sure to 
 This applies to the naming of files and variables, but also to other things indentation style, where to add line breaks and so on.
 
 If you spot any inconsistencies in the existing code as you work, you raise this as a concern.
-This can be done by posting a comment on a PR or by opening a GitHub issue if the inconsistency is not a part of a PR.
 
 You try to keep your code as lightweight as possible, so the addon is not the CPU or memory intensive.
