@@ -30,6 +30,8 @@ externals:
         tag: latest
 
 ignore:
+    - .github
+    - screenshots
     - .editorconfig
     - .env.local.example
     - .gitignore
