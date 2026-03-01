@@ -223,15 +223,32 @@ function TradeTracker:ShowGUI()
     -- Create some spacing between the search box and the refresh button
     local spacer = AceGUI:Create("Label")
     spacer:SetText(" ")
-    spacer:SetRelativeWidth(0.4)
+    spacer:SetRelativeWidth(0.23)
     frame:AddChild(spacer)
+
+    -- Create a button that will open the options menu when clicked
+    local optionsButton = AceGUI:Create("Button")
+    optionsButton:SetText("Options")
+    optionsButton:SetRelativeWidth(0.17)
+    optionsButton:SetCallback("OnClick", function()
+        -- Hide the main GUI before opening options to prevent overlap issues
+        AceGUI:Release(frame)
+        AceConfigDialog:Open(addonName)
+    end)
+    frame:AddChild(optionsButton)
+
+    -- Add another spacer to push the refresh button and options button apart
+    local spacer2 = AceGUI:Create("Label")
+    spacer2:SetText(" ")
+    spacer2:SetRelativeWidth(0.02)
+    frame:AddChild(spacer2)
 
     local tab -- Declare tab group variable here, to be used in the refresh button callback
 
     -- Create refresh button that reloads the current tab, keeping the current search filter
     local refreshButton = AceGUI:Create("Button")
     refreshButton:SetText("Refresh")
-    refreshButton:SetRelativeWidth(0.2)
+    refreshButton:SetRelativeWidth(0.17)
     refreshButton:SetCallback("OnClick", function()
         local tables = {
             buy = TradeTracker.buyTable,

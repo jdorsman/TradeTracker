@@ -8,7 +8,9 @@ local options = {
             name = "Open TradeTracker",
             desc = "Open the main TradeTracker GUI. You can also use the /tt or /tradetracker slash commands.",
             type = "execute",
-            func = function() TradeTracker:ShowGUI() end
+            func = function() TradeTracker:ShowGUI() end,
+            -- Only show this button in Blizzard's Interface Options
+            hidden = function() return AceConfigDialog.OpenFrames[addonName] ~= nil end
         },
         general = {
             order = 10,
