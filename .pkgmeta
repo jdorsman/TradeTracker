@@ -38,5 +38,6 @@ ignore:
     - .pkgmeta
     - CONTRIBUTING.md
     - Makefile
+    - README.md
 
 license-output: LICENSE
