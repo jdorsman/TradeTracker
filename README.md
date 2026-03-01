@@ -15,5 +15,25 @@ It will combine messages from different chat channels (General, Trade, Services 
 
 The addon supports the following slash commands:
 
-`/tradetracker` or `/tt` - Open the TradeTracker GUI
-`/tradetracker config` or `/tt config` - Open the configuration panel
+- `/tradetracker` or `/tt` - Open the TradeTracker GUI
+- `/tradetracker config` or `/tt config` - Open the configuration panel
+
+## Screenshots
+
+![Buy tab](screenshots/TradeTracker-buy1.png)
+_The buy tab, showing things people are looking to buy_
+
+![Tooltips](screenshots/TradeTracker-buy2.png)
+_Tooltips can be triggered by clicking on a highlighted item_
+
+![Sell tab](screenshots/TradeTracker-sell1.png)
+_The sell tab, showing things people are looking to sell_
+
+![Search functionality](screenshots/TradeTracker-sell2.png)
+_Searching for specific items will filter the results_
+
+![Services tab](screenshots/TradeTracker-services1.png)
+_The services tab, showing what profession services people are offering_
+
+![Options](screenshots/TradeTracker-options.png)
+_The options dialog for TradeTracker_
