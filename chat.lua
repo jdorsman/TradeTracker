@@ -52,10 +52,11 @@ function TradeTracker:ProcessChatMessage(eventName, text, playerName, _, channel
 end
 
 function TradeTracker:AddToTable(tbl, text, playerName, channelBaseName)
-    -- If a duplicate message from the same player is found (regardless of channel), skip adding it to prevent cluttering the tables with repeated messages
-    for _, entry in ipairs(tbl) do
+    -- If a duplicate message from the same player is found (regardless of channel), remove the old message, effectively just updating its timestamp and avoid spam.
+    for i, entry in ipairs(tbl) do
         if entry.player == playerName and entry.item == text then
-            self:DebugPrint("Duplicate message from " .. playerName .. " ignored: " .. text, 2)
+            self:DebugPrint("Duplicate message from " .. playerName .. " found: " .. text)
+            table.remove(tbl, i)
             return
         end
     end

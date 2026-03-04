@@ -1,6 +1,6 @@
 # TradeTracker
 
-TradeTracker is an addon for World of Warcraft Classic (TBC).
+TradeTracker is an addon for World of Warcraft Classic (including TBC/MoP).
 It will combine messages from different chat channels (General, Trade, Services and proximity chat/yells) into clearly divided overviews.
 
 ## Features

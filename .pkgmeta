@@ -41,3 +41,4 @@ ignore:
     - README.md
 
 license-output: LICENSE
+manual-changelog: CHANGELOG.md
