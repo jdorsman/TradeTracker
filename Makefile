@@ -3,7 +3,7 @@ include .env.local
 ACE3_REVISION=r1390
 ACE3_DOWNLOAD_LINK=https://www.wowace.com/projects/ace3/files/7571919/download
 
-ADDON_PATH=$(WOW_PATH)/$(if $(WOW_VERSION),_$(WOW_VERSION)_/,)Interface/AddOns/TradeTracker
+ADDON_PATH=$(WOW_PATH)/$(if $(WOW_FLAVOR),_$(WOW_FLAVOR)_/,)Interface/AddOns/TradeTracker
 
 libs: # Install dependencies
 	@rm -rf Libs/
@@ -23,7 +23,6 @@ libs: # Install dependencies
 	done
 
 	@echo "Cleaning up..."
-	@rm build/Ace3-Release-$(ACE3_REVISION).zip
 	@rm -rf build/
 	@echo "Dependencies installed."
 

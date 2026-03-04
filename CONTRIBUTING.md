@@ -6,7 +6,7 @@ The [.env.local.example](.env.local.example) file can copied to `.env.local`.
 It holds two variables:
 
 - `WOW_PATH` - The path to your local WoW installation (root directory where the Launcher .exe sits)
-- `WOW_VERSION` - The "version" of WoW you want to target. This is the name that the underscored sub-directories in your `WOW_PATH` have (e.g. `classic_era` or `anniversary`)
+- `WOW_FLAVOR` - The "flavor" of WoW you want to target. This is the name that the underscored sub-directories in your `WOW_PATH` have (e.g. `classic_era` or `anniversary`)
 
 ## Makefile
 
