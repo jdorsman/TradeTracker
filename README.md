@@ -37,6 +37,3 @@ _Searching for specific items will filter the results_
 
 ![Services tab](screenshots/TradeTracker-services1.png)
 _The services tab, showing what profession services people are offering_
-
-![Options](screenshots/TradeTracker-options.png)
-_The options dialog for TradeTracker_
