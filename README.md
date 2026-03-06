@@ -11,6 +11,8 @@ It will combine messages from different chat channels (General, Trade, Services 
 - Distracting raid icons (such as stars, circles and skulls) are filtered out (optional, this can be configured in the addon settings)
 - Immediately whisper or /who a trading player with one click of a button
 - Chat channels do not have to be visible for TradeTracker to work. As long as you have joined them, you can keep them hidden.
+- Highlight configured keywords in the GUI and optionally repeat them to the main chat window (useful if you want to hide trade chat).
+- Ignore trade messages with configured keywords. For example, if you are not interested in people buying/selling boosting services, you can ignore any message containing the word "boost".
 
 ## Usage
 
