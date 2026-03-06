@@ -1,5 +1,16 @@
 # TradeTracker Changelog
 
+## v1.1.0
+
+- Fixed bug where duplicate messages would not get properly updated.
+- Reworked the options panel to be split into different windows.
+- Added new highlight feature that highlights configured keywords in the GUI and optionally outputs them to the main chat window.
+- Added new ignore feature that ignores trade messages with configured keywords.
+For example, if you are not interested in people buying/selling boosting services, you can ignore any message containing the word "boost".
+- Added "LF " as a matching term for the Buy tab as this is often used by people looking to buy certain items or services (e.g. "LF enchanter").
+This can lead to some false positives when people are looking for more players for their dungeon/raid (e.g. "LF tank"),
+but you can use the ignore feature to filter those out (by adding "LF tank" or "LF heal" to your ignore list).
+
 ## v1.0.3
 
 - Add support for WoW Classic (Vanilla / Classic Era)

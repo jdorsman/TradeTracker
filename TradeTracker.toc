@@ -2,7 +2,7 @@
 ## Title: TradeTracker
 ## Notes: Organize the spam from trade and services chat into a clear overview.
 ## Author: jdorsman
-## Version: 1.0.3
+## Version: 1.1.0
 ## SavedVariables: TradeTrackerDB
 
 embeds.xml

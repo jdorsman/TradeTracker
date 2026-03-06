@@ -30,24 +30,60 @@ function TradeTracker:ProcessChatMessage(eventName, text, playerName, _, channel
     end
 
     -- Remove realm suffix from player name if present (e.g. "Player-Realm" becomes "Player")
-    shortPlayerName = string.gsub(playerName, "%-" .. GetRealmName() .. "$", "")
+    local shortPlayerName = string.gsub(playerName, "%-" .. GetRealmName() .. "$", "")
 
-    -- If the message has "WTS" in it, add it to the sell table
-    if string.match(text, "[Ww][Tt][Ss]") then
-        self:AddToTable(self.sellTable, text, shortPlayerName, channelBaseName)
-        self:DebugPrint("Added message to sell table: " .. text, 2)
-    end
+    -- Message categorization
+    local filters = {
+        ["lf "] = self.buyTable,
+        ["wtb"] = self.buyTable,
+        ["wts"] = self.sellTable,
+        ["lfw"] = self.serviceTable,
+    }
 
-    -- If the message has "WTB" in it, add it to the buy table
-    if string.match(text, "[Ww][Tt][Bb]") then
-        self:AddToTable(self.buyTable, text, shortPlayerName, channelBaseName)
-        self:DebugPrint("Added message to buy table: " .. text, 2)
-    end
+    local categories = {
+        ["lf "] = "Buy",
+        ["wtb"] = "Buy",
+        ["wts"] = "Sell",
+        ["lfw"] = "Service",
+    }
 
-    -- If the message has "LFW" in it, add it to the service table
-    if string.match(text, "[Ll][Ff][Ww]") then
-        self:AddToTable(self.serviceTable, text, shortPlayerName, channelBaseName)
-        self:DebugPrint("Added message to service table: " .. text, 2)
+    for filter, tbl in pairs(filters) do
+        if string.match(string.lower(text), filter) then
+            local lowerCategory = string.lower(categories[filter])
+
+            -- If the message contains one of the ignore keywords, skip it
+            local globalIgnoreKeywords = { string.split(",", self.db.profile.ignores["global"]) }
+            local categoryIgnoreKeywords = { string.split(",", self.db.profile.ignores[lowerCategory]) }
+            local allIgnoreKeywords = { unpack(globalIgnoreKeywords), unpack(categoryIgnoreKeywords) }
+
+            for _, keyword in ipairs(allIgnoreKeywords) do
+                if keyword ~= "" and string.match(string.lower(text), string.lower(keyword)) then
+                    self:DebugPrint("Ignoring message from " .. playerName .. ": " .. text .. ", because it contains ignore keyword: " .. keyword)
+                    return
+                end
+            end
+
+            -- Otherwise, add the message to the respective table
+            self:AddToTable(tbl, text, shortPlayerName, channelBaseName)
+            self:DebugPrint("Added message to " .. categories[filter] .. " table: " .. text, 2)
+
+            -- If the message contains one our highlight keywords and repeat highlight is set, then print it
+            if self.db.profile.repeat_highlights["global"] or self.db.profile.repeat_highlights[lowerCategory] then
+                local globalHighlightKeywords = { string.split(",", self.db.profile.highlights["global"]) }
+                local categoryHighlightKeywords = { string.split(",", self.db.profile.highlights[lowerCategory]) }
+                local allHighlightKeywords = { unpack(globalHighlightKeywords), unpack(categoryHighlightKeywords) }
+
+                for _, keyword in ipairs(allHighlightKeywords) do
+                    if keyword ~= "" and string.find(string.lower(text), string.lower(keyword), 1, true) then
+                        self:DebugPrint("Repeating message from " .. playerName .. ": " .. text .. ", because it contains highlight keyword: " .. keyword)
+                        self:PrintHighlight(lowerCategory, shortPlayerName, text)
+                        break
+                    end
+                end
+            end
+        else
+            self:DebugPrint("Message from " .. shortPlayerName .. " did not match any filter: " .. text, 2)
+        end
     end
 end
 
@@ -57,7 +93,7 @@ function TradeTracker:AddToTable(tbl, text, playerName, channelBaseName)
         if entry.player == playerName and entry.item == text then
             self:DebugPrint("Duplicate message from " .. playerName .. " found: " .. text)
             table.remove(tbl, i)
-            return
+            break
         end
     end
 

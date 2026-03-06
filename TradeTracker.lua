@@ -20,6 +20,28 @@ local defaultOptions = {
         },
         rt_icons = true,
         sort_order = "newest",
+        highlights = {
+            ["global"] = "",
+            ["buy"] = "",
+            ["sell"] = "",
+            ["service"] = "",
+        },
+        ignores = {
+            ["global"] = "",
+            ["buy"] = "",
+            ["sell"] = "",
+            ["service"] = "",
+        },
+        highlight_color = {
+            ["buy"] = { 1, 1, 0 },
+            ["sell"] = { 1, 1, 0 },
+            ["service"] = { 1, 1, 0 },
+        },
+        repeat_highlights = {
+            ["buy"] = true,
+            ["sell"] = true,
+            ["service"] = true,
+        },
     },
 }
 
@@ -86,6 +108,22 @@ end
 
 function TradeTracker:GetAddOnStatusLabel()
     return TradeTracker.db.profile.enabled and "|cff00ff00enabled|r" or "|cffff0000disabled|r"
+end
+
+-- Print a message with the highlight color defined in the settings
+function TradeTracker:PrintHighlight(category, player, msg)
+    -- Create a clickable player link that opens a whisper when clicked
+    local clickablePlayer = string.format("|Hplayer:%s|h[%s]|h", player, player)
+
+    -- Print the clickable player name with highlighted message
+    self:Print(string.format(
+        "%s |cff%02x%02x%02x%s|r",
+        clickablePlayer,
+        self.db.profile.highlight_color[category][1] * 255,
+        self.db.profile.highlight_color[category][2] * 255,
+        self.db.profile.highlight_color[category][3] * 255,
+        msg
+    ))
 end
 
 -- Print a message only when Debug Mode is enabled, with optional verbosity level.

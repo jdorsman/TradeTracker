@@ -47,7 +47,7 @@ end
 
 local function DrawTab(container, tbl)
     -- Create a scrollable area for the entries
-    scrollcontainer = AceGUI:Create("SimpleGroup")
+    local scrollcontainer = AceGUI:Create("SimpleGroup")
     scrollcontainer:SetFullWidth(true)
     scrollcontainer:SetFullHeight(true)
     scrollcontainer:SetLayout("Fill")
@@ -69,6 +69,32 @@ local function DrawTab(container, tbl)
     if TradeTracker.db.profile.sort_order == "newest" then
         tbl = ReverseTable(tbl)
     end
+
+    -- Print a header for our table, giving it a soft blue background color
+    local headerGroup = AceGUI:Create("SimpleGroup")
+    headerGroup:SetLayout("Flow")
+    headerGroup:SetRelativeWidth(1)
+
+    local playerHeader = AceGUI:Create("Label")
+    playerHeader:SetText("|cff3399ffPlayer|r")
+    playerHeader:SetRelativeWidth(0.2)
+    headerGroup:AddChild(playerHeader)
+
+    local itemHeader = AceGUI:Create("Label")
+    itemHeader:SetText("|cff3399ffItem / Service|r")
+    itemHeader:SetRelativeWidth(0.7)
+    headerGroup:AddChild(itemHeader)
+
+    local timeHeader = AceGUI:Create("Label")
+    timeHeader:SetText("|cff3399ffTime|r")
+    timeHeader:SetRelativeWidth(0.1)
+    headerGroup:AddChild(timeHeader)
+    scrollFrame:AddChild(headerGroup)
+
+    local headerSpacer = AceGUI:Create("Label")
+    headerSpacer:SetText(" ")
+    headerSpacer:SetRelativeWidth(1)
+    headerGroup:AddChild(headerSpacer)
 
     for i, data in ipairs(tbl) do
         -- Create a container for this entry to hold multiple columns
@@ -102,7 +128,25 @@ local function DrawTab(container, tbl)
 
         -- Item column (wide)
         local itemLabel = AceGUI:Create("InteractiveLabel")
-        itemLabel:SetText(ReplaceRaidTargets(data.item))
+        local itemText = ReplaceRaidTargets(data.item)
+        itemLabel:SetText(itemText)
+
+        -- Highlight the item if it contains any of the user-defined keywords
+        local globalHighlights = { string.split(",", TradeTracker.db.profile.highlights["global"]) }
+        local tabHighlights = { string.split(",", TradeTracker.db.profile.highlights[selectedGroup]) }
+        local highlights = { unpack(globalHighlights), unpack(tabHighlights) }
+
+        if #highlights > 0 then
+            for _, word in ipairs(highlights) do
+                word = string.trim(word)
+
+                if word ~= "" and string.find(string.lower(itemText), string.lower(word), 1, true) then
+                    itemLabel:SetColor(unpack(TradeTracker.db.profile.highlight_color[selectedGroup]))
+                    break
+                end
+            end
+        end
+
         itemLabel:SetCallback("OnClick", function(widget, event, button)
             -- Get the mouse position relative to the widget frame
             local cursorX, cursorY = GetCursorPosition()
