@@ -101,6 +101,56 @@ local options = {
                     set = function(info, val) TradeTracker.db.profile.sort_order = val end,
                     get = function(info) return TradeTracker.db.profile.sort_order end
                 },
+                trigger_words = {
+                    order = 24,
+                    name = "Trigger Words",
+                    type = "header",
+                },
+                trigger_words_desc = {
+                    order = 25,
+                    name = "Trigger words are used to categorize messages. If a message contains any of the specified words (case-insensitive), it will be categorized accordingly. Only exact words are considered a match (e.g. \"LF\" will NOT match \"LFW\"). If you use the same word in multiple categories, only the first match is taken into account.",
+                    type = "description",
+                },
+                buy_trigger_words = {
+                    order = 26,
+                    name = "Buy Trigger Words",
+                    desc = "Comma-separated list of case-insensitive keywords that trigger categorization of a message as Buy. Only the exact words are matched (no partial matches), but you can use spaces.",
+                    type = "input",
+                    width = "full",
+                    set = function(info, val) TradeTracker.db.profile.trigger_words.buy = val end,
+                    get = function(info) return TradeTracker.db.profile.trigger_words.buy end
+                },
+                sell_trigger_words = {
+                    order = 27,
+                    name = "Sell Trigger Words",
+                    desc = "Comma-separated list of case-insensitive keywords that trigger categorization of a message as Sell. Only the exact words are matched (no partial matches), but you can use spaces.",
+                    type = "input",
+                    width = "full",
+                    set = function(info, val) TradeTracker.db.profile.trigger_words.sell = val end,
+                    get = function(info) return TradeTracker.db.profile.trigger_words.sell end
+                },
+                service_trigger_words = {
+                    order = 28,
+                    name = "Service Trigger Words",
+                    desc = "Comma-separated list of case-insensitive keywords that trigger categorization of a message as Service. Only the exact words are matched (no partial matches), but you can use spaces.",
+                    type = "input",
+                    width = "full",
+                    set = function(info, val) TradeTracker.db.profile.trigger_words.service = val end,
+                    get = function(info) return TradeTracker.db.profile.trigger_words.service end
+                },
+                reset_trigger_words = {
+                    order = 29,
+                    name = "Reset to Defaults",
+                    desc = "Reset trigger words to their default values.",
+                    type = "execute",
+                    confirm = true,
+                    confirmText = "Are you sure you want to reset trigger words to their default values?",
+                    func = function()
+                        TradeTracker.db.profile.trigger_words.buy = DefaultOptions.profile.trigger_words.buy
+                        TradeTracker.db.profile.trigger_words.sell = DefaultOptions.profile.trigger_words.sell
+                        TradeTracker.db.profile.trigger_words.service = DefaultOptions.profile.trigger_words.service
+                    end,
+                }
             }
         },
         highlights_and_ignores = {

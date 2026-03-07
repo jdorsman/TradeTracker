@@ -5,7 +5,7 @@ AceConfig = LibStub("AceConfig-3.0")
 AceConfigDialog = LibStub("AceConfigDialog-3.0")
 AceGUI = LibStub("AceGUI-3.0")
 
-local defaultOptions = {
+DefaultOptions = {
     profile = {
         enabled = true,
         entry_separator = true,
@@ -20,6 +20,11 @@ local defaultOptions = {
         },
         rt_icons = true,
         sort_order = "newest",
+        trigger_words = {
+            buy = "LF ,WTB",
+            sell = "WTS",
+            service = "LFW",
+        },
         highlights = {
             ["global"] = "",
             ["buy"] = "",
@@ -64,7 +69,7 @@ local function RemoveExpiredEntries(tbl, tblName)
 end
 
 function TradeTracker:OnInitialize()
-    self.db = LibStub("AceDB-3.0"):New(addonName .. "DB", defaultOptions, true)
+    self.db = LibStub("AceDB-3.0"):New(addonName .. "DB", DefaultOptions, true)
 
     -- Register slash commands
     self:RegisterChatCommand("tt", "SlashCommand")
