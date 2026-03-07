@@ -1,5 +1,10 @@
 # TradeTracker Changelog
 
+## v1.2.0
+
+- Fixed a bug where highlight and ignore keywords were not properly applied.
+- Added "Trigger Words" to the "Chat Settings" section, allowing players to define their own categorization triggers (e.g. "WTB" for Buy or "WTS" for Sell).
+
 ## v1.1.0
 
 - Fixed bug where duplicate messages would not get properly updated.

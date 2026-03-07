@@ -33,31 +33,73 @@ function TradeTracker:ProcessChatMessage(eventName, text, playerName, _, channel
     local shortPlayerName = string.gsub(playerName, "%-" .. GetRealmName() .. "$", "")
 
     -- Message categorization
-    local filters = {
-        ["lf "] = self.buyTable,
-        ["wtb"] = self.buyTable,
-        ["wts"] = self.sellTable,
-        ["lfw"] = self.serviceTable,
-    }
+    local buyTriggerWords = { string.split(",", self.db.profile.trigger_words.buy) }
+    local sellTriggerWords = { string.split(",", self.db.profile.trigger_words.sell) }
+    local serviceTriggerWords = { string.split(",", self.db.profile.trigger_words.service) }
+    local filters = {}
 
-    local categories = {
-        ["lf "] = "Buy",
-        ["wtb"] = "Buy",
-        ["wts"] = "Sell",
-        ["lfw"] = "Service",
-    }
+    -- Doing these in reverse order so that the first entries in the list take precedence in case of duplicate trigger words across categories (e.g. "LF" in both buy and service would apply it to buy).
+    for _, trigger in ipairs(serviceTriggerWords) do
+        if trigger ~= "" then
+            filters[string.lower(trigger)] = self.serviceTable
+        end
+    end
+
+    for _, trigger in ipairs(sellTriggerWords) do
+        if trigger ~= "" then
+            filters[string.lower(trigger)] = self.sellTable
+        end
+    end
+
+    for _, trigger in ipairs(buyTriggerWords) do
+        if trigger ~= "" then
+            filters[string.lower(trigger)] = self.buyTable
+        end
+    end
+
+    local categories = {}
+
+    for _, trigger in ipairs(serviceTriggerWords) do
+        if trigger ~= "" then
+            categories[string.lower(trigger)] = "Service"
+        end
+    end
+
+    for _, trigger in ipairs(sellTriggerWords) do
+        if trigger ~= "" then
+            categories[string.lower(trigger)] = "Sell"
+        end
+    end
+
+    for _, trigger in ipairs(buyTriggerWords) do
+        if trigger ~= "" then
+            categories[string.lower(trigger)] = "Buy"
+        end
+    end
 
     for filter, tbl in pairs(filters) do
         if string.match(string.lower(text), filter) then
             local lowerCategory = string.lower(categories[filter])
 
             -- If the message contains one of the ignore keywords, skip it
+            local allIgnoreKeywords = {}
             local globalIgnoreKeywords = { string.split(",", self.db.profile.ignores["global"]) }
             local categoryIgnoreKeywords = { string.split(",", self.db.profile.ignores[lowerCategory]) }
-            local allIgnoreKeywords = { unpack(globalIgnoreKeywords), unpack(categoryIgnoreKeywords) }
+
+            for _, keyword in ipairs(globalIgnoreKeywords) do
+                if keyword ~= "" then
+                    table.insert(allIgnoreKeywords, keyword)
+                end
+            end
+
+            for _, keyword in ipairs(categoryIgnoreKeywords) do
+                if keyword ~= "" then
+                    table.insert(allIgnoreKeywords, keyword)
+                end
+            end
 
             for _, keyword in ipairs(allIgnoreKeywords) do
-                if keyword ~= "" and string.match(string.lower(text), string.lower(keyword)) then
+                if keyword ~= "" and string.find(string.lower(text), string.lower(keyword), 1, true) then
                     self:DebugPrint("Ignoring message from " .. playerName .. ": " .. text .. ", because it contains ignore keyword: " .. keyword)
                     return
                 end
@@ -69,9 +111,21 @@ function TradeTracker:ProcessChatMessage(eventName, text, playerName, _, channel
 
             -- If the message contains one our highlight keywords and repeat highlight is set, then print it
             if self.db.profile.repeat_highlights["global"] or self.db.profile.repeat_highlights[lowerCategory] then
+                local allHighlightKeywords = {}
                 local globalHighlightKeywords = { string.split(",", self.db.profile.highlights["global"]) }
                 local categoryHighlightKeywords = { string.split(",", self.db.profile.highlights[lowerCategory]) }
-                local allHighlightKeywords = { unpack(globalHighlightKeywords), unpack(categoryHighlightKeywords) }
+
+                for _, keyword in ipairs(globalHighlightKeywords) do
+                    if keyword ~= "" then
+                        table.insert(allHighlightKeywords, keyword)
+                    end
+                end
+
+                for _, keyword in ipairs(categoryHighlightKeywords) do
+                    if keyword ~= "" then
+                        table.insert(allHighlightKeywords, keyword)
+                    end
+                end
 
                 for _, keyword in ipairs(allHighlightKeywords) do
                     if keyword ~= "" and string.find(string.lower(text), string.lower(keyword), 1, true) then
@@ -81,8 +135,6 @@ function TradeTracker:ProcessChatMessage(eventName, text, playerName, _, channel
                     end
                 end
             end
-        else
-            self:DebugPrint("Message from " .. shortPlayerName .. " did not match any filter: " .. text, 2)
         end
     end
 end
