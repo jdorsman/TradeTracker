@@ -10,6 +10,8 @@ body:
     attributes:
       label: What happened?
       description: Please describe your issue. What is happening?
+    validations:
+      required: true
   - type: input
     id: game-version
     attributes:
@@ -17,6 +19,8 @@ body:
       description: |
         You can use the following command in chat to find out `/run print((select(1, GetBuildInfo())))`
         (The command may show you a warning asking if you want to run potentially dangerous scripts, if you never did a `/run` before and confirmed this already)
+    validations:
+      required: true
   - type: textarea
     id: reproduction-steps
     attributes:
