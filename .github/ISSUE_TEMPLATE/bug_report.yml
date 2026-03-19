@@ -14,7 +14,7 @@ body:
     id: game-version
     attributes:
       label: What version of the game are you on?
-      placeholder: You can use the following command in chat to find out: `/run print((select(1, GetBuildInfo())))` (The command may show you a warning asking if you want to run potentially dangerous scripts, if you never did a `/run` before and confirmed this already)
+      placeholder: You can use the following command in chat to find out `/run print((select(1, GetBuildInfo())))` (The command may show you a warning asking if you want to run potentially dangerous scripts, if you never did a `/run` before and confirmed this already)
   - type: textarea
     id: reproduction-steps
     attributes:
