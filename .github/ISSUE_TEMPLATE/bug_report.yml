@@ -14,12 +14,19 @@ body:
     id: game-version
     attributes:
       label: What version of the game are you on?
-      placeholder: You can use the following command in chat to find out `/run print((select(1, GetBuildInfo())))` (The command may show you a warning asking if you want to run potentially dangerous scripts, if you never did a `/run` before and confirmed this already)
+      placeholder: |
+        You can use the following command in chat to find out `/run print((select(1, GetBuildInfo())))`
+        (The command may show you a warning asking if you want to run potentially dangerous scripts, if you never did a `/run` before and confirmed this already)
   - type: textarea
     id: reproduction-steps
     attributes:
       label: Reproduction steps
-      description:  Please describe what steps you took for the issue to encounter. For example 1. Login to the game\n2. Type `/tradetracker` in chat\n3. Click the Sell tab\n4. An error appears saying ....
+      description: |
+        Please describe what steps you took for the issue to encounter. For example
+        1. Login to the game
+        2. Type `/tradetracker` in chat
+        3. Click the Sell tab
+        4. An error appears saying ....
   - type: checkboxes
     id: isolation
     attributes:
