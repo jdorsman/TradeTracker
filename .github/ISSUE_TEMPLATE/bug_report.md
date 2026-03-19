@@ -1,8 +1,9 @@
 name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: bug
-assignees: ''
+description: Create a report to help us improve
+title: "[Bug]: "
+labels: ["bug", "triage"]
+assignees:
+  - jdorsman
 body:
   - type: textarea
     id: what-happened
