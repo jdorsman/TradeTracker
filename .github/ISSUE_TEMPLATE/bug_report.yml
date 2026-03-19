@@ -19,7 +19,7 @@ body:
     id: reproduction-steps
     attributes:
       label: Reproduction steps
-      description:  Please describe what steps you took for the issue to encounter. For example: 1. Login to the game\n2. Type `/tradetracker` in chat\n3. Click the Sell tab\n4. An error appears saying ....
+      description:  Please describe what steps you took for the issue to encounter. For example 1. Login to the game\n2. Type `/tradetracker` in chat\n3. Click the Sell tab\n4. An error appears saying ....
   - type: checkboxes
     id: isolation
     attributes:
