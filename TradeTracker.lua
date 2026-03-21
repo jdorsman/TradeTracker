@@ -69,7 +69,10 @@ local function RemoveExpiredEntries(tbl, tblName)
 end
 
 function TradeTracker:OnInitialize()
-    self.db = LibStub("AceDB-3.0"):New(addonName .. "DB", DefaultOptions, true)
+    self.db = LibStub("AceDB-3.0"):New(addonName .. "DB", DefaultOptions)
+    self.db.RegisterCallback(self, "OnProfileChanged", function() self:Print("Profile changed to " .. self.db:GetCurrentProfile()) end)
+    self.db.RegisterCallback(self, "OnProfileReset", function() self:Print("Profile " .. self.db:GetCurrentProfile() .. " has been reset to default settings.") end)
+    self:RegisterOptions()
 
     -- Register slash commands
     self:RegisterChatCommand("tt", "SlashCommand")
@@ -97,7 +100,7 @@ function TradeTracker:OnEnable()
     self:RegisterEvent("CHAT_MSG_YELL", "ProcessChatMessage")
     self:RegisterEvent("CHAT_MSG_SAY", "ProcessChatMessage")
 
-    self:Print("enabled")
+    self:Print("enabled (Profile: " .. self.db:GetCurrentProfile() .. ")")
 end
 
 function TradeTracker:OnDisable()

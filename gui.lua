@@ -352,6 +352,6 @@ function TradeTracker:ShowGUI()
     end)
 
     -- Register the frame in the UISpecialFrames so it can be closed with the Escape key
-    _G["TradeTrackerGUI"] = frame.frame
+    _G["TradeTrackerGUI"] = frame
     table.insert(UISpecialFrames, "TradeTrackerGUI")
 end
