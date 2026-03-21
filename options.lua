@@ -108,13 +108,13 @@ local options = {
                 },
                 trigger_words_desc = {
                     order = 25,
-                    name = "Trigger words are used to categorize messages. If a message contains any of the specified words (case-insensitive), it will be categorized accordingly. Only exact words are considered a match (e.g. \"LF\" will NOT match \"LFW\"). If you use the same word in multiple categories, only the first match is taken into account.",
+                    name = "Trigger words are used to categorize messages. If a message contains any of the specified words (case-insensitive), it will be categorized accordingly. Partial matches count (e.g. \"LF\" will also match \"LFW\"), but you can use spaces to be more specific. If you use the same word in multiple categories, only the first match is taken into account.",
                     type = "description",
                 },
                 buy_trigger_words = {
                     order = 26,
                     name = "Buy Trigger Words",
-                    desc = "Comma-separated list of case-insensitive keywords that trigger categorization of a message as Buy. Only the exact words are matched (no partial matches), but you can use spaces.",
+                    desc = "Comma-separated list of case-insensitive keywords that trigger categorization of a message as Buy. Partial matches count (e.g. \"LF\" will also match \"LFW\"), but you can use spaces to be more specific.",
                     type = "input",
                     width = "full",
                     set = function(info, val) TradeTracker.db.profile.trigger_words.buy = val end,
@@ -123,7 +123,7 @@ local options = {
                 sell_trigger_words = {
                     order = 27,
                     name = "Sell Trigger Words",
-                    desc = "Comma-separated list of case-insensitive keywords that trigger categorization of a message as Sell. Only the exact words are matched (no partial matches), but you can use spaces.",
+                    desc = "Comma-separated list of case-insensitive keywords that trigger categorization of a message as Sell. Partial matches count (e.g. \"LF\" will also match \"LFW\"), but you can use spaces to be more specific.",
                     type = "input",
                     width = "full",
                     set = function(info, val) TradeTracker.db.profile.trigger_words.sell = val end,
@@ -132,7 +132,7 @@ local options = {
                 service_trigger_words = {
                     order = 28,
                     name = "Service Trigger Words",
-                    desc = "Comma-separated list of case-insensitive keywords that trigger categorization of a message as Service. Only the exact words are matched (no partial matches), but you can use spaces.",
+                    desc = "Comma-separated list of case-insensitive keywords that trigger categorization of a message as Service. Partial matches count (e.g. \"LF\" will also match \"LFW\"), but you can use spaces to be more specific.",
                     type = "input",
                     width = "full",
                     set = function(info, val) TradeTracker.db.profile.trigger_words.service = val end,
@@ -320,9 +320,14 @@ local options = {
     },
 }
 
--- Register options table and add to Blizzard Options/AddOns GUI
-AceConfig:RegisterOptionsTable(addonName, options, nil)
-AceConfigDialog:AddToBlizOptions(addonName)
+function TradeTracker:RegisterOptions()
+    -- Add profile management options
+    options.args.profile = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
+
+    -- Register options table and add to Blizzard Options/AddOns GUI
+    AceConfig:RegisterOptionsTable(addonName, options, nil)
+    AceConfigDialog:AddToBlizOptions(addonName)
+end
 
 function TradeTracker:ToggleChannel(channel)
     local enabled = self.db.profile.channels[channel]

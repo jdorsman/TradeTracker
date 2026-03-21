@@ -1,5 +1,10 @@
 # TradeTracker Changelog
 
+## v1.3.0
+
+- Add profile support, allowing you to configure different settings (e.g. different highlights/ignores for different characters).
+- Fixed description for trigger words. Matches are actually partial, not word-based.
+
 ## v1.2.0
 
 - Fixed a bug where highlight and ignore keywords were not properly applied.
