@@ -142,7 +142,7 @@ end
 function TradeTracker:AddToTable(tbl, text, playerName, channelBaseName)
     -- If a duplicate message from the same player is found (regardless of channel), remove the old message, effectively just updating its timestamp and avoid spam.
     for i, entry in ipairs(tbl) do
-        if entry.player == playerName and entry.item == text then
+        if entry.player == playerName and string.lower(entry.item) == string.lower(text) then
             self:DebugPrint("Duplicate message from " .. playerName .. " found: " .. text)
             table.remove(tbl, i)
             break
