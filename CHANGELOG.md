@@ -1,5 +1,11 @@
 # TradeTracker Changelog
 
+## v1.4.0
+
+- Add "Blink Tray Icon" option, making the WoW tray icon blink on buy/sell/service messages that match one of your highlight words.
+- Add "Highlight Sound" option, allowing you to set a sound notification for buy/sell/service messages that match one of your highlight words.
+- Fixed an issue where messages would not be deduplicated if the casing was different (e.g. uppercase vs lowercase words).
+
 ## v1.3.0
 
 - Add profile support, allowing you to configure different settings (e.g. different highlights/ignores for different characters).

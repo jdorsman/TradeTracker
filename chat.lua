@@ -131,6 +131,10 @@ function TradeTracker:ProcessChatMessage(eventName, text, playerName, _, channel
                     if keyword ~= "" and string.find(string.lower(text), string.lower(keyword), 1, true) then
                         self:DebugPrint("Repeating message from " .. playerName .. ": " .. text .. ", because it contains highlight keyword: " .. keyword)
                         self:PrintHighlight(lowerCategory, shortPlayerName, text)
+                        self:PlayHighlightSound(lowerCategory)
+                        if self.db.profile.blink_tray_icon[lowerCategory] then
+                            FlashClientIcon(true)
+                        end
                         break
                     end
                 end

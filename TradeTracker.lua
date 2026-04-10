@@ -31,6 +31,16 @@ DefaultOptions = {
             ["sell"] = "",
             ["service"] = "",
         },
+        highlight_sounds = {
+            ["buy"] = "",
+            ["sell"] = "",
+            ["service"] = "",
+        },
+        blink_tray_icon = {
+            ["buy"] = false,
+            ["sell"] = false,
+            ["service"] = false,
+        },
         ignores = {
             ["global"] = "",
             ["buy"] = "",
@@ -132,6 +142,13 @@ function TradeTracker:PrintHighlight(category, player, msg)
         self.db.profile.highlight_color[category][3] * 255,
         msg
     ))
+end
+
+-- Play a sound based on the category and the user's settings for that category
+function TradeTracker:PlayHighlightSound(category)
+    if self.db.profile.highlight_sounds[category] ~= "" and self.db.profile.highlight_sounds[category] ~= "custom" then
+        PlaySoundFile(self.db.profile.highlight_sounds[category])
+    end
 end
 
 -- Print a message only when Debug Mode is enabled, with optional verbosity level.

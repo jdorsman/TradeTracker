@@ -1,5 +1,26 @@
+local highlightSoundsPreset = {
+    ["None"] = "",
+    ["PutDownRing"] = 567551,
+    ["AlarmClockWarning2"] = 567399,
+    ["MONEYFRAMEOPEN"] = 567483,
+    ["UI_BnetToast"] = 567402,
+    ["AuctionWindowOpen"] = 567482,
+}
+
+local function highlightSoundValues()
+    local sounds = {}
+
+    for soundName, soundID in pairs(highlightSoundsPreset) do
+        sounds[soundID] = soundName
+    end
+
+    sounds["custom"] = "Custom"
+
+    return sounds
+end
+
 local options = {
-    name = addonName,
+    name = addonName .. " v" .. C_AddOns.GetAddOnMetadata(addonName, "Version"),
     handler = TradeTracker,
     type = "group",
     childGroups = "tree",
@@ -217,8 +238,58 @@ local options = {
                             set = function(info, val) TradeTracker.db.profile.repeat_highlights.buy = val end,
                             get = function(info) return TradeTracker.db.profile.repeat_highlights.buy end
                         },
-                        buy_ignores = {
+                        buy_blink_tray_icon = {
                             order = 54,
+                            name = "Blink Tray Icon",
+                            desc = "Blink the WoW tray icon when a message matches any buy highlight keyword. This can be useful if you have WoW minimized and want to be alerted to matching trades.",
+                            type = "toggle",
+                            set = function(info, val) TradeTracker.db.profile.blink_tray_icon.buy = val end,
+                            get = function(info) return TradeTracker.db.profile.blink_tray_icon.buy end
+                        },
+                        buy_highlight_sound = {
+                            order = 55,
+                            name = "Highlight Sound",
+                            desc = "Play a sound when a message matches the buy highlight keywords.",
+                            type = "select",
+                            values = highlightSoundValues(),
+                            set = function(info, val)
+                                TradeTracker.db.profile.highlight_sounds.buy = val
+                                PlaySoundFile(val)
+                            end,
+                            get = function(info)
+                                for _, soundID in pairs(highlightSoundsPreset) do
+                                    if TradeTracker.db.profile.highlight_sounds.buy == soundID then
+                                        return TradeTracker.db.profile.highlight_sounds.buy
+                                    end
+                                end
+
+                                return "custom"
+                            end
+                        },
+                        buy_highlight_sound_custom = {
+                            order = 56,
+                            name = "Custom Highlight Sound ID",
+                            desc = "Enter the sound ID or relative file path of the custom sound you want to play here. You can find sound IDs on websites like wowhead.com.",
+                            type = "input",
+                            width = "full",
+                            set = function(info, val)
+                                TradeTracker.db.profile.highlight_sounds.buy = val
+                                PlaySoundFile(val)
+                            end,
+                            get = function(info) return TradeTracker.db.profile.highlight_sounds.buy end,
+                            -- Only show this option if 'Custom' is selected in the 'Highlight Sound' setting
+                            hidden = function()
+                                for _, soundID in pairs(highlightSoundsPreset) do
+                                    if TradeTracker.db.profile.highlight_sounds.buy == soundID then
+                                        return true
+                                    end
+                                end
+
+                                return false
+                            end
+                        },
+                        buy_ignores = {
+                            order = 57,
                             name = "Ignore Keywords",
                             desc = "Comma-separated list of case-insensitive keywords to ignore. Messages containing these words will not be shown in the GUI's Buy tab. Partial matches are considered a match (e.g. \"port\" will also match \"portal\"). If a message matches both a highlight and ignore keyword, the ignore has priority.",
                             type = "input",
@@ -260,8 +331,58 @@ local options = {
                             set = function(info, val) TradeTracker.db.profile.repeat_highlights.sell = val end,
                             get = function(info) return TradeTracker.db.profile.repeat_highlights.sell end
                         },
-                        sell_ignores = {
+                        sell_highlight_sound = {
                             order = 64,
+                            name = "Highlight Sound",
+                            desc = "Play a sound when a message matches the sell highlight keywords.",
+                            type = "select",
+                            values = highlightSoundValues(),
+                            set = function(info, val)
+                                TradeTracker.db.profile.highlight_sounds.sell = val
+                                PlaySoundFile(val)
+                            end,
+                            get = function(info)
+                                for _, soundID in pairs(highlightSoundsPreset) do
+                                    if TradeTracker.db.profile.highlight_sounds.sell == soundID then
+                                        return TradeTracker.db.profile.highlight_sounds.sell
+                                    end
+                                end
+
+                                return "custom"
+                            end
+                        },
+                        sell_blink_tray_icon = {
+                            order = 65,
+                            name = "Blink Tray Icon",
+                            desc = "Blink the WoW tray icon when a message matches any sell highlight keyword. This can be useful if you have WoW minimized and want to be alerted to matching trades.",
+                            type = "toggle",
+                            set = function(info, val) TradeTracker.db.profile.blink_tray_icon.sell = val end,
+                            get = function(info) return TradeTracker.db.profile.blink_tray_icon.sell end
+                        },
+                        sell_highlight_sound_custom = {
+                            order = 66,
+                            name = "Custom Highlight Sound ID",
+                            desc = "Enter the sound ID or relative file path of the custom sound you want to play here. You can find sound IDs on websites like wowhead.com.",
+                            type = "input",
+                            width = "full",
+                            set = function(info, val)
+                                TradeTracker.db.profile.highlight_sounds.sell = val
+                                PlaySoundFile(val)
+                            end,
+                            get = function(info) return TradeTracker.db.profile.highlight_sounds.sell end,
+                            -- Only show this option if 'Custom' is selected in the 'Highlight Sound' setting
+                            hidden = function()
+                                for _, soundID in pairs(highlightSoundsPreset) do
+                                    if TradeTracker.db.profile.highlight_sounds.sell == soundID then
+                                        return true
+                                    end
+                                end
+
+                                return false
+                            end
+                        },
+                        sell_ignores = {
+                            order = 67,
                             name = "Ignore Keywords",
                             desc = "Comma-separated list of case-insensitive keywords to ignore. Messages containing these words will not be shown in the GUI's Sell tab. Partial matches are considered a match (e.g. \"port\" will also match \"portal\"). If a message matches both a highlight and ignore keyword, the ignore has priority.",
                             type = "input",
@@ -303,8 +424,58 @@ local options = {
                             set = function(info, val) TradeTracker.db.profile.repeat_highlights.service = val end,
                             get = function(info) return TradeTracker.db.profile.repeat_highlights.service end
                         },
-                        service_ignores = {
+                        service_highlight_sound = {
                             order = 74,
+                            name = "Highlight Sound",
+                            desc = "Play a sound when a message matches the service highlight keywords.",
+                            type = "select",
+                            values = highlightSoundValues(),
+                            set = function(info, val)
+                                TradeTracker.db.profile.highlight_sounds.service = val
+                                PlaySoundFile(val)
+                            end,
+                            get = function(info)
+                                for _, soundID in pairs(highlightSoundsPreset) do
+                                    if TradeTracker.db.profile.highlight_sounds.service == soundID then
+                                        return TradeTracker.db.profile.highlight_sounds.service
+                                    end
+                                end
+
+                                return "custom"
+                            end
+                        },
+                        service_blink_tray_icon = {
+                            order = 75,
+                            name = "Blink Tray Icon",
+                            desc = "Blink the WoW tray icon when a message matches any service highlight keyword. This can be useful if you have WoW minimized and want to be alerted to matching trades.",
+                            type = "toggle",
+                            set = function(info, val) TradeTracker.db.profile.blink_tray_icon.service = val end,
+                            get = function(info) return TradeTracker.db.profile.blink_tray_icon.service end
+                        },
+                        service_highlight_sound_custom = {
+                            order = 76,
+                            name = "Custom Highlight Sound ID",
+                            desc = "Enter the sound ID or relative file path of the custom sound you want to play here. You can find sound IDs on websites like wowhead.com.",
+                            type = "input",
+                            width = "full",
+                            set = function(info, val)
+                                TradeTracker.db.profile.highlight_sounds.service = val
+                                PlaySoundFile(val)
+                            end,
+                            get = function(info) return TradeTracker.db.profile.highlight_sounds.service end,
+                            -- Only show this option if 'Custom' is selected in the 'Highlight Sound' setting
+                            hidden = function()
+                                for _, soundID in pairs(highlightSoundsPreset) do
+                                    if TradeTracker.db.profile.highlight_sounds.service == soundID then
+                                        return true
+                                    end
+                                end
+
+                                return false
+                            end
+                        },
+                        service_ignores = {
+                            order = 77,
                             name = "Ignore Keywords",
                             desc = "Comma-separated list of case-insensitive keywords to ignore. Messages containing these words will not be shown in the GUI's Service tab. Partial matches are considered a match (e.g. \"port\" will also match \"portal\"). If a message matches both a highlight and ignore keyword, the ignore has priority.",
                             type = "input",
