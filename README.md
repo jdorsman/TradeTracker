@@ -37,3 +37,12 @@ _Searching for specific items will filter the results_
 
 ![Services tab](screenshots/TradeTracker-services1.png)
 _The services tab, showing what profession services people are offering_
+
+![Chat Options](screenshots/TradeTracker-options-chat.png)
+_Chat Settings allow you to customize what the addon should look for and in which channels_
+
+![Highlight Keywords](screenshots/TradeTracker-options-highlights.png)
+_Highlight Keywords allow you to pay extra attention to certain keywords in chat (e.g. people looking to buy portal services if you are a mage)_
+
+![Ignore Keywords](screenshots/TradeTracker-options-ignores.png)
+_Ignore Keywords allow you to filter out things you are not interested in (e.g. boosting services or guild recruitment messages)_
