@@ -1,5 +1,9 @@
 # TradeTracker Changelog
 
+## v1.4.1
+
+- Fixed an inconsistency between the Buy/Sell/Service tabs in the Highlight & Ignores options.
+
 ## v1.4.0
 
 - Add "Blink Tray Icon" option, making the WoW tray icon blink on buy/sell/service messages that match one of your highlight words.

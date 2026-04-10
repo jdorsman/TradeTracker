@@ -331,8 +331,16 @@ local options = {
                             set = function(info, val) TradeTracker.db.profile.repeat_highlights.sell = val end,
                             get = function(info) return TradeTracker.db.profile.repeat_highlights.sell end
                         },
-                        sell_highlight_sound = {
+                        sell_blink_tray_icon = {
                             order = 64,
+                            name = "Blink Tray Icon",
+                            desc = "Blink the WoW tray icon when a message matches any sell highlight keyword. This can be useful if you have WoW minimized and want to be alerted to matching trades.",
+                            type = "toggle",
+                            set = function(info, val) TradeTracker.db.profile.blink_tray_icon.sell = val end,
+                            get = function(info) return TradeTracker.db.profile.blink_tray_icon.sell end
+                        },
+                        sell_highlight_sound = {
+                            order = 65,
                             name = "Highlight Sound",
                             desc = "Play a sound when a message matches the sell highlight keywords.",
                             type = "select",
@@ -350,14 +358,6 @@ local options = {
 
                                 return "custom"
                             end
-                        },
-                        sell_blink_tray_icon = {
-                            order = 65,
-                            name = "Blink Tray Icon",
-                            desc = "Blink the WoW tray icon when a message matches any sell highlight keyword. This can be useful if you have WoW minimized and want to be alerted to matching trades.",
-                            type = "toggle",
-                            set = function(info, val) TradeTracker.db.profile.blink_tray_icon.sell = val end,
-                            get = function(info) return TradeTracker.db.profile.blink_tray_icon.sell end
                         },
                         sell_highlight_sound_custom = {
                             order = 66,
@@ -424,8 +424,16 @@ local options = {
                             set = function(info, val) TradeTracker.db.profile.repeat_highlights.service = val end,
                             get = function(info) return TradeTracker.db.profile.repeat_highlights.service end
                         },
-                        service_highlight_sound = {
+                        service_blink_tray_icon = {
                             order = 74,
+                            name = "Blink Tray Icon",
+                            desc = "Blink the WoW tray icon when a message matches any service highlight keyword. This can be useful if you have WoW minimized and want to be alerted to matching trades.",
+                            type = "toggle",
+                            set = function(info, val) TradeTracker.db.profile.blink_tray_icon.service = val end,
+                            get = function(info) return TradeTracker.db.profile.blink_tray_icon.service end
+                        },
+                        service_highlight_sound = {
+                            order = 75,
                             name = "Highlight Sound",
                             desc = "Play a sound when a message matches the service highlight keywords.",
                             type = "select",
@@ -443,14 +451,6 @@ local options = {
 
                                 return "custom"
                             end
-                        },
-                        service_blink_tray_icon = {
-                            order = 75,
-                            name = "Blink Tray Icon",
-                            desc = "Blink the WoW tray icon when a message matches any service highlight keyword. This can be useful if you have WoW minimized and want to be alerted to matching trades.",
-                            type = "toggle",
-                            set = function(info, val) TradeTracker.db.profile.blink_tray_icon.service = val end,
-                            get = function(info) return TradeTracker.db.profile.blink_tray_icon.service end
                         },
                         service_highlight_sound_custom = {
                             order = 76,
