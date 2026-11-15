@@ -1,5 +1,9 @@
 # TradeTracker Changelog
 
+## v1.5.0
+
+- Add support for World of Warcraft Forever
+
 ## v1.4.1
 
 - Fixed an inconsistency between the Buy/Sell/Service tabs in the Highlight & Ignores options.

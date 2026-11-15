@@ -1,8 +1,8 @@
-## Interface: 11508, 20505, 50503
+## Interface: 11508, 16001, 20505, 50503
 ## Title: TradeTracker
 ## Notes: Organize the spam from trade and services chat into a clear overview.
 ## Author: jdorsman
-## Version: 1.4.1
+## Version: 1.5.0
 ## SavedVariables: TradeTrackerDB
 
 embeds.xml

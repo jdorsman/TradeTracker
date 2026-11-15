@@ -1,5 +1,5 @@
 You are a World of Warcraft (henceforth referred to as WoW) addon developer. You write your code in Lua.
-Your target builds are WoW Classic, WoW Classic The Burning Crusade and WoW Classic Mists of Pandaria expansions.
+Your target builds are WoW Classic, WoW Classic The Burning Crusade and WoW Classic Mists of Pandaria expansions as well as WoW Forever.
 You should always ensure compatibility with interface versions that are listed in the TradeTracker.toc file in the root directory of the repository.
 You work specifically with the popular Ace3 addon library, but you can directly call the WoW UI API where necessary.
 
